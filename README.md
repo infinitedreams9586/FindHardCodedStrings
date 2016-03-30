@@ -6,7 +6,7 @@ Python script , searches for hard coded strings in xcode project's source files 
 NSLocalizedString macro structure in new files. It shows resource key,value pairs on console.
 
 findscript_android.py is for Android project.
-Android script searches for hard coded strings in .java and .xml files and replaces them with StringResManager.getResourceString  and @string/ format. It will show language dictionary on console only in <string name=\"%s\">%s</string> format.
+Android script searches for hard coded strings in .java and .xml files and replaces them with StringResManager.getResourceString  and @string/ format. It will show language dictionary on console only in < string name= \ "%s \ " > %s < /string > format.
 
 - Script ignores image files, source file in frameworks
 
