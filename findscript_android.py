@@ -10,6 +10,7 @@ replace_index = 0
 dict_strings = dict()
 
 def is_uncode(s):
+    #this checks for double byte strings, return True if you want to check only English strings
     return not all(ord(c) < 128 for c in s)
 
 def should_ignore_line(line):
