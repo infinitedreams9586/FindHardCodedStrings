@@ -7,7 +7,9 @@ index = 0
 pattern = re.compile("(@\".*?[^\\\\]\")")
 
 def is_uncode(s):
-    return not all(ord(c) < 128 for c in s)
+    return True
+    # for double byte characters enable below line
+    #return not all(ord(c) < 128 for c in s)
 
 def should_ignore_line(line):
     line = line.strip()
@@ -36,15 +38,16 @@ def find_hardcoded_string(full_file_name):
                     value = match.group(0)
                     global index
                     key_index = "\"%s_%d\"" % (filename, index)
-                    local_value = "NSLocalizedString(@%s, @%s)" %(key_index, value)
+                    local_value = "NSLocalizedString(@%s, @%s)" %(key_index.replace("@",""), value.replace("@",""))
                     file_data = file_data.replace(value, local_value)
                     index = index + 1
                     replace_count = replace_count + 1
-                    #print "%s,%s,%s,%s" % (full_file_name, i+1, match.group(0),line.strip())
+                    print "%s = %s;" % (key_index.replace("@",""),value.replace("@",""))
                 line = line[match.end():]
             else:
                 break
 
+    #  New files will be written in tmp folder
     if replace_count > 0:
         if not os.path.exists("tmp/" + folder_path):
             os.makedirs("tmp/"+ folder_path)
@@ -67,12 +70,20 @@ def should_skip_dir(root):
     ".framework" in root or
     ".bundle" in root)
 
-for root, dirname, filename in os.walk("show_ios"):
+# TODO: Change HelloWorld to your ios project folder's name
+print "---------------------------------------------------------------------------------------------------"
+print "localized resource key value file will be shown in console only, keep backup before closing console"
+print "copy these key value resources"
+print "---------------------------------------------------------------------------------------------------"
+for root, dirname, filename in os.walk("HelloWorld"):
     if should_skip_dir(root):
         continue
 
     for fname in filename:
         full_file_name = os.path.join(root, fname)
         if check_if_valid_file_name(full_file_name):
-            print full_file_name
+            #print full_file_name
             find_hardcoded_string(full_file_name)
+print "---------------------------------------------------------------------------------------------------"
+print " new source files are placed in temp folder "
+print "---------------------------------------------------------------------------------------------------"
