@@ -14,4 +14,5 @@ Android script searches for hard coded strings in .java and .xml files and repla
 
 Usage:
 -> place the script in the folder, where you project folder is.
+-> open script file, there is one # TODO: section, read and add your folder name accordingly and save.
 -> execute script:  python scriptname.py
